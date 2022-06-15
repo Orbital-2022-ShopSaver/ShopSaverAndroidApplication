@@ -14,6 +14,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class MainActivity extends AppCompatActivity {
 
+    //JH test
+    //JH test2
     private static final String TAG = "MainActivity";
 
     @Override
