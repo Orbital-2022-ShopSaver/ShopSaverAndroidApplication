@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,8 +27,10 @@ public class SearchActivity extends AppCompatActivity {
 
     // Initialise my widgets
     private EditText searchItem;
+    // TODO: By right searchPlatform should be like we can search multiple platforms
     private EditText searchPlatform;
     private Button searchButton;
+    private ProgressBar progressBar;
 
     // TODO: Hardcoded endpoint, but will change
     private String apiEndpoint = "https://testwebapiformyself.herokuapp.com/";
@@ -50,11 +54,14 @@ public class SearchActivity extends AppCompatActivity {
         // TODO: But for now we just assume is from Amazon (use String Amazon)
         searchPlatform = findViewById(R.id.search_platform);
         searchButton = findViewById(R.id.search_item_button);
+        progressBar = findViewById(R.id.search_progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
 
         // Set a onClick Listener for the searchButton
         // When the searchButton is clicked, get the item results that the user has searched
         // After that, we will show the results in a DisplayResultActivity
         searchButton.setOnClickListener(view -> {
+            progressBar.setVisibility(View.VISIBLE);
             String item = searchItem.getText().toString();
             String platform = searchItem.getText().toString();
 
@@ -85,6 +92,8 @@ public class SearchActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
+
+            progressBar.setVisibility(View.INVISIBLE);
             // After we get the products, we set it to be global with the ShopSaverApi
             ShopSaverApi shopSaverApi = ShopSaverApi.getInstance();
             shopSaverApi.setProductArrayList(productArrayList);
