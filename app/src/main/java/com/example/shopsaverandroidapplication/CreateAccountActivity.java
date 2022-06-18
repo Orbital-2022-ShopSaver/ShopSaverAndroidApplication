@@ -206,6 +206,20 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
+    // Before we show user stuff on the screen,
+    // We want to make sure all the Firebase stuff is set up
+    // So we do it in onStart()
 
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        // Get current user
+        currentUser = firebaseAuth.getCurrentUser();
+
+        // Listen to changes in Firebase Authorization
+        firebaseAuth.addAuthStateListener(authStateListener);
+    }
 }
 
