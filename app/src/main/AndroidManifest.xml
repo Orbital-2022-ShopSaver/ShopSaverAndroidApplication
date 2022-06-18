@@ -16,6 +16,12 @@
         android:theme="@style/Theme.ShopSaverAndroidApplication"
         tools:targetApi="31">
         <activity
+            android:name=".SearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TrackingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".HomepageActivity"
             android:exported="false" />
         <activity

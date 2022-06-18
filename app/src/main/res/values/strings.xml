@@ -10,4 +10,6 @@
     <string name="or_text">OR</string>
     <string name="create_text">Create Account</string>
     <string name="username_hint">Username</string>
+    <string name="tracking_list_text">Tracking List</string>
+    <string name="search_text">Search</string>
 </resources>
