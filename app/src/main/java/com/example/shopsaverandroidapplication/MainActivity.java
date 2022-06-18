@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     // Get the path to the "Users" part of DB
     private CollectionReference collectionReference = db.collection("Users");
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                             .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                 @Override
                                 public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                    // If havde error, do not proceed
+                                    // If have error, do not proceed
                                     if (error != null) {
                                         return;
                                     }
