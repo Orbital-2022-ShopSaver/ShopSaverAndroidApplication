@@ -1,0 +1,13 @@
+<resources>
+    <!--  app_name manages what is seen on the top border  -->
+    <string name="app_name">ShopSaver</string>
+    <string name="shopsaver_text">ShopSaver</string>
+    <string name="text_shop_better_today">Shop Better Today.</string>
+    <string name="text_get_started">Get Started</string>
+    <string name="email_hint">Email</string>
+    <string name="password_hint">Password</string>
+    <string name="login_text">Login</string>
+    <string name="or_text">OR</string>
+    <string name="create_text">Create Account</string>
+    <string name="username_hint">Username</string>
+</resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "282596289260",
+    "project_id": "shopsaverandroidapplication",
+    "storage_bucket": "shopsaverandroidapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:282596289260:android:c144bd9aa102d0aad6d3c9",
+        "android_client_info": {
+          "package_name": "com.example.shopsaverandroidapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "282596289260-03gdrknd0ap8nkbad0jshfsdvdvo60lm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCToiczChrVLDI41Yc81NEF5-0RVOEXc0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "282596289260-03gdrknd0ap8nkbad0jshfsdvdvo60lm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
