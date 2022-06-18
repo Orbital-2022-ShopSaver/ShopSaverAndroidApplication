@@ -15,4 +15,5 @@
     <string name="enter_item_here_text">Enter Item Here</string>
     <string name="platform_text">Platform</string>
     <string name="add_item_to_track">ADD</string>
+    <string name="signout">Sign Out</string>
 </resources>
