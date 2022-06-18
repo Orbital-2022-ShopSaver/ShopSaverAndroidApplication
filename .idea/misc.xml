@@ -9,6 +9,8 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2682291666666667" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout/activity_search.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_show_product.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_tracking_list.xml" value="0.26902173913043476" />
         <entry key="app/src/main/res/layout/item_row.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu.xml" value="0.28229166666666666" />
       </map>

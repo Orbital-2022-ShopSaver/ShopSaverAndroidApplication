@@ -1,6 +1,7 @@
 package ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.shopsaverandroidapplication.DisplayResultsActivity;
 import com.example.shopsaverandroidapplication.R;
-import com.google.firebase.auth.FirebaseAuth;
+import com.example.shopsaverandroidapplication.ShowProductActivity;
 
 import java.util.List;
 
@@ -71,7 +73,7 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             name = itemView.findViewById(R.id.item_name_list);
             price = itemView.findViewById(R.id.item_price_list);
             url = itemView.findViewById(R.id.item_url_list);
-            addToListButton = itemView.findViewById(R.id.add_item_to_list_button);
+            addToListButton = itemView.findViewById(R.id.go_to_item_button);
 
             // When button is clicked, we should add it to a tracking list
             addToListButton.setOnClickListener(view -> {
@@ -80,7 +82,16 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
                 String priceValue = price.getText().toString();
                 String urlValue = url.getText().toString();
                 // TODO: Not sure how to add the item to a list
+                // TODO: I think probably can create another activity for it
+                // TODO: Then we pass these values
+                // Start an intent to go to the activity that showcase product details
+                // For now we just show the same field values
                 Log.d("Item", nameValue + priceValue + urlValue);
+                Intent intent = new Intent(context, ShowProductActivity.class);
+                intent.putExtra("name", nameValue);
+                intent.putExtra("price", priceValue);
+                intent.putExtra("url", urlValue);
+                context.startActivity(intent);
             });
         }
 
