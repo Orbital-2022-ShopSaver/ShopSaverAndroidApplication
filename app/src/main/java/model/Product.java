@@ -3,16 +3,16 @@ package model;
 // This class represents what an Item will look like
 // TODO: Probably can add more fields like images
 // For now will just be the name, price and url
-public class Item {
+public class Product {
 
     private String name;
     private String price;
     private String url;
 
     // Must have an empty constructor for Firestore to work
-    public Item(){}
+    public Product(){}
 
-    public Item(String name, String price, String url) {
+    public Product(String name, String price, String url) {
         this.name = name;
         this.price = price;
         this.url = url;

@@ -12,4 +12,6 @@
     <string name="username_hint">Username</string>
     <string name="tracking_list_text">Tracking List</string>
     <string name="search_text">Search</string>
+    <string name="enter_item_here_text">Enter Item Here</string>
+    <string name="platform_text">Platform</string>
 </resources>
