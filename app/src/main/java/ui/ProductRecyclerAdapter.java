@@ -1,15 +1,18 @@
 package ui;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.shopsaverandroidapplication.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.List;
 
@@ -56,6 +59,9 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView name, price, url;
+        public Button addToListButton;
+
+
 
         public ViewHolder(@NonNull View itemView, Context ctx) {
             super(itemView);
@@ -65,6 +71,17 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             name = itemView.findViewById(R.id.item_name_list);
             price = itemView.findViewById(R.id.item_price_list);
             url = itemView.findViewById(R.id.item_url_list);
+            addToListButton = itemView.findViewById(R.id.add_item_to_list_button);
+
+            // When button is clicked, we should add it to a tracking list
+            addToListButton.setOnClickListener(view -> {
+                // Test out if can get the item first
+                String nameValue = name.getText().toString();
+                String priceValue = price.getText().toString();
+                String urlValue = url.getText().toString();
+                // TODO: Not sure how to add the item to a list
+                Log.d("Item", nameValue + priceValue + urlValue);
+            });
         }
 
     }
