@@ -2,26 +2,23 @@ package com.example.shopsaverandroidapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-    //JH test
-    //JH test2
-    private static final String TAG = "MainActivity";
+    private NavigationBarView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         // Remove title and action bar
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -29,25 +26,53 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
 
-        FirebaseMessaging.getInstance().getToken()
-                .addOnCompleteListener(new OnCompleteListener<String>() {
-                    @Override
-                    public void onComplete(@NonNull Task<String> task) {
-                        if (!task.isSuccessful()) {
-                            Log.w(TAG, "Fetching FCM registration token failed", task.getException());
-                            return;
-                        }
+        bottomNavigationView = findViewById(R.id.bottomNav_main);
+        bottomNavigationView.setOnItemSelectedListener(bottomNavMethod);
 
-                        // Get new FCM registration token
-                        String token = task.getResult();
-
-                        // Log and toast
-                        String msg = getString(R.string.msg_token_fmt, token);
-                        Log.d(TAG, msg);
-//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                    }
-                });
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_main, new HomeFragment()).commit();
     }
 
+    private NavigationBarView.OnItemSelectedListener bottomNavMethod = new NavigationBarView.OnItemSelectedListener() {
 
+        /**
+         * Called when an item in the navigation menu is selected.
+         *
+         * @param item The selected item
+         * @return true to display the item as the selected item and false if the item should not be
+         * selected. Consider setting non-selectable items as disabled preemptively to make them
+         * appear non-interactive.
+         */
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            boolean isSearch = false;
+            Fragment fragment = null;
+            switch(item.getItemId()) {
+                case R.id.home:
+                    fragment = new HomeFragment();
+                    break;
+                case R.id.list:
+                    fragment = new ListFragment();
+                    break;
+                case R.id.tbd:
+                    fragment = new TbdFragment();
+                    break;
+                case R.id.settings:
+                    fragment = new SettingsFragment();
+                    break;
+                case R.id.search:
+                    isSearch = true;
+                    break;
+                default:
+                    fragment = null;
+            }
+
+            if (isSearch) {
+                //TODO: Launch search activity
+                isSearch = false;
+            } else {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_main, fragment).commit();
+            }
+            return true;
+        }
+    };
 }

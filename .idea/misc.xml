@@ -4,12 +4,20 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2325" />
+        <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.186" />
         <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.2325" />
         <entry key="app/src/main/res/drawable/round_corner_rectangle.xml" value="0.2325" />
         <entry key="app/src/main/res/drawable/round_style.xml" value="0.2185" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.10826502732240437" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15491943359375002" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.12773224043715847" />
+        <entry key="app/src/main/res/layout/fragment_list.xml" value="0.12773224043715847" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.111328125" />
         <entry key="app/src/main/res/layout/fragment_pass.xml" value="0.111328125" />
+        <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.1109375" />
+        <entry key="app/src/main/res/layout/fragment_tbd.xml" value="0.1109375" />
+        <entry key="app/src/main/res/layout/list_adapter.xml" value="0.11015625" />
+        <entry key="app/src/main/res/menu/menu.xml" value="0.132421875" />
       </map>
     </option>
   </component>

@@ -16,11 +16,15 @@
         android:theme="@style/Theme.ShopSaverAndroidApp"
         tools:targetApi="31">
         <activity
+            android:name=".LoginActivity2"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

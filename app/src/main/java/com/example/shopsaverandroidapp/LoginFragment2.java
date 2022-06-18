@@ -27,11 +27,11 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class LoginFragment extends Fragment {
+public class LoginFragment2 extends Fragment {
 
     EditText editTextUsername, editTextPassword;
 
-    public LoginFragment() {
+    public LoginFragment2() {
         // Required empty public constructor
     }
 
