@@ -55,31 +55,32 @@ public class HomepageActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu (with the signout option)
-        getMenuInflater().inflate(R.menu.menu, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        // Engage actions depending on what option is selected
-        switch (item.getItemId()) {
-            case R.id.action_signout:
-                // Sign user out if current user exists
-                if (user != null && firebaseAuth != null) {
-                    // Use the inbuilt signOut() function
-                    firebaseAuth.signOut();
-
-                    // Move back to the GetStarted Page
-                    // That is the MainActivity
-                    startActivity(new Intent(HomepageActivity.this,
-                            MainActivity.class));
-                }
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
+    // TODO: Disabled the menu of sign out on Homepage, plan to move the sign out to elsewhere
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu (with the signout option)
+//        getMenuInflater().inflate(R.menu.menu, menu);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//
+//        // Engage actions depending on what option is selected
+//        switch (item.getItemId()) {
+//            case R.id.action_signout:
+//                // Sign user out if current user exists
+//                if (user != null && firebaseAuth != null) {
+//                    // Use the inbuilt signOut() function
+//                    firebaseAuth.signOut();
+//
+//                    // Move back to the GetStarted Page
+//                    // That is the MainActivity
+//                    startActivity(new Intent(HomepageActivity.this,
+//                            MainActivity.class));
+//                }
+//                break;
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

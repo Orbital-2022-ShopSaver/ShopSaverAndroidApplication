@@ -25,22 +25,31 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
     private Context context;
     private List<Product> productList;
 
-    // Constructor
+    // Constructors
     public ProductRecyclerAdapter(Context context, List<Product> productList) {
         this.context = context;
+        this.productList = productList;
+    }
+
+    public ProductRecyclerAdapter(List<Product> productList) {
         this.productList = productList;
     }
 
     @NonNull
     @Override
     public ProductRecyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the view
-        // Depends on context
-        View view = LayoutInflater.from(context)
-                .inflate(R.layout.item_row, parent, false);
+//        // Inflate the view
+//        // Depends on context
+//        View view = LayoutInflater.from(context)
+//                .inflate(R.layout.item_row, parent, false);
+//
+//        // Return the view with the context
+//        return new ViewHolder(view, context);
 
-        // Return the view with the context
-        return new ViewHolder(view, context);
+        return new ViewHolder(LayoutInflater
+                .from(parent.getContext())
+                .inflate(R.layout.item_row, parent, false), parent.getContext());
+
     }
 
     @Override

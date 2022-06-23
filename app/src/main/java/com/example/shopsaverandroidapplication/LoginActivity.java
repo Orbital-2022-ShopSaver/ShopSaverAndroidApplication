@@ -91,80 +91,85 @@ public class LoginActivity extends AppCompatActivity {
     // This method will handle logging in of the user
     private void loginEmailPasswordUser(String email, String pwd) {
 
-        // We set progressBar to visible, to indicate something is ongoing
-        progressBar.setVisibility(View.VISIBLE);
+//        // We set progressBar to visible, to indicate something is ongoing
+//        progressBar.setVisibility(View.VISIBLE);
+//
+//        // Validate that the fields are not empty
+//        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pwd)) {
+//            // Use the inbuilt Firebase login method
+//            firebaseAuth.signInWithEmailAndPassword(email, pwd)
+//                    // Complete Listener
+//                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<AuthResult> task) {
+//                            // Get the user and the ID
+//                            FirebaseUser user = firebaseAuth.getCurrentUser();
+//                            assert user != null;
+//                            String currentUserId = user.getUid();
+//
+//                            // From the collectionReference (database relevant to users),
+//                            // We try to find the currentUserId
+//                            collectionReference
+//                                    .whereEqualTo("userId", currentUserId)
+//                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
+//                                        @Override
+//                                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                                            // If have error, don't proceed
+//                                            if (error != null) {
+//                                                return;
+//                                            }
+//
+//                                            assert value != null;
+//
+//                                            // Check if the value is not empty
+//                                            if (!value.isEmpty()) {
+//                                                // Can set to invisible, since nothing on going behind the scenes now
+//                                                progressBar.setVisibility(View.INVISIBLE);
+//
+//                                                // Loop through the values and get the data
+//                                                // We set it with our global ShopSaverApi
+//                                                // So that it knows the user, id and email
+//                                                for (QueryDocumentSnapshot snapshot : value) {
+//                                                    ShopSaverApi shopSaverApi = ShopSaverApi.getInstance();
+//                                                    shopSaverApi.setUsername(snapshot.getString("username"));
+//                                                    shopSaverApi.setUserId(snapshot.getString("userId"));
+//                                                    shopSaverApi.setUserEmail(snapshot.getString("userEmail"));
+//
+//                                                    // After that, we go to the Homepage Page (Activity)
+//                                                    startActivity(new Intent(LoginActivity.this,
+//                                                            HomepageActivity.class));
+//
+//                                                    // Finish since we are not coming back to this activity
+//                                                    finish();
+//                                                }
+//                                            }
+//                                        }
+//                                    });
+//                        }
+//                    })
+//                    // Add a failure listener
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            progressBar.setVisibility(View.INVISIBLE);
+//                            // Log that failed to login
+//                            // TODO: Probably should tell the user
+//                            Log.d("Failure", "Failed to login");
+//                        }
+//                    });
+//
+//        } else {
+//            // If fields are empty, inform the user
+//            // Make progressBar invisible since nothing ongoing behind now
+//            progressBar.setVisibility(View.INVISIBLE);
+//
+//            Toast.makeText(LoginActivity.this,
+//                    "Empty Fields are not allowed", Toast.LENGTH_SHORT).show();
+//        }
 
-        // Validate that the fields are not empty
-        if (!TextUtils.isEmpty(email) && !TextUtils.isEmpty(pwd)) {
-            // Use the inbuilt Firebase login method
-            firebaseAuth.signInWithEmailAndPassword(email, pwd)
-                    // Complete Listener
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            // Get the user and the ID
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            assert user != null;
-                            String currentUserId = user.getUid();
-
-                            // From the collectionReference (database relevant to users),
-                            // We try to find the currentUserId
-                            collectionReference
-                                    .whereEqualTo("userId", currentUserId)
-                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                            // If have error, don't proceed
-                                            if (error != null) {
-                                                return;
-                                            }
-
-                                            assert value != null;
-
-                                            // Check if the value is not empty
-                                            if (!value.isEmpty()) {
-                                                // Can set to invisible, since nothing on going behind the scenes now
-                                                progressBar.setVisibility(View.INVISIBLE);
-
-                                                // Loop through the values and get the data
-                                                // We set it with our global ShopSaverApi
-                                                // So that it knows the user, id and email
-                                                for (QueryDocumentSnapshot snapshot : value) {
-                                                    ShopSaverApi shopSaverApi = ShopSaverApi.getInstance();
-                                                    shopSaverApi.setUsername(snapshot.getString("username"));
-                                                    shopSaverApi.setUserId(snapshot.getString("userId"));
-                                                    shopSaverApi.setUserEmail(snapshot.getString("userEmail"));
-
-                                                    // After that, we go to the Homepage Page (Activity)
-                                                    startActivity(new Intent(LoginActivity.this,
-                                                            HomepageActivity.class));
-
-                                                    // Finish since we are not coming back to this activity
-                                                    finish();
-                                                }
-                                            }
-                                        }
-                                    });
-                        }
-                    })
-                    // Add a failure listener
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            progressBar.setVisibility(View.INVISIBLE);
-                            // Log that failed to login
-                            // TODO: Probably should tell the user
-                            Log.d("Failure", "Failed to login");
-                        }
-                    });
-
-        } else {
-            // If fields are empty, inform the user
-            // Make progressBar invisible since nothing ongoing behind now
-            progressBar.setVisibility(View.INVISIBLE);
-
-            Toast.makeText(LoginActivity.this,
-                    "Empty Fields are not allowed", Toast.LENGTH_SHORT).show();
-        }
+        // TODO: Testing code below, uncomment the above and delete the starting activity below
+        startActivity(new Intent(LoginActivity.this,
+                HomepageAltActivity.class));
+        finish();
     }
 }
