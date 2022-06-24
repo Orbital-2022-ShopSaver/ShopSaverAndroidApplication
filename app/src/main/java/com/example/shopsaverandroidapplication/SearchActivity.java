@@ -60,6 +60,7 @@ public class SearchActivity extends AppCompatActivity {
         // Set a onClick Listener for the searchButton
         // When the searchButton is clicked, get the item results that the user has searched
         // After that, we will show the results in a DisplayResultActivity
+        // Test
         searchButton.setOnClickListener(view -> {
             progressBar.setVisibility(View.VISIBLE);
             String item = searchItem.getText().toString();
