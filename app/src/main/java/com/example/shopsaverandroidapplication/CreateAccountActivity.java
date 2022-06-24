@@ -165,7 +165,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                                     // Pass the user details
                                                                     // TODO: Quite sure this part don't need anymore, but testing out
                                                                     Intent intent = new Intent(CreateAccountActivity.this,
-                                                                            HomepageActivity.class);
+                                                                            HomepageAltActivity.class);
                                                                     intent.putExtra("username", name);
                                                                     intent.putExtra("userId", currentUserId);
                                                                     startActivity(intent);

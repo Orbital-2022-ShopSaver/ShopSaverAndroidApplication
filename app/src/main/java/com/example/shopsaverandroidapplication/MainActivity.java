@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                                             shopSaverApi.setUserEmail(snapshot.getString("userEmail"));
 
                                             startActivity(new Intent(MainActivity.this,
-                                                    HomepageActivity.class));
+                                                    HomepageAltActivity.class));
 
                                             // Finish since we do not want to come back
                                             // To this MainActivity
