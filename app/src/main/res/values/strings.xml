@@ -32,4 +32,5 @@
     <string name="msg_token_fmt" translatable="false">FCM registration Token: %s</string>
     <string name="general_list">General items.</string>
     <string name="specific_list">Specific items.</string>
+    <string name="sign_out_temp">SIGNOUT(TEMP)</string>
 </resources>

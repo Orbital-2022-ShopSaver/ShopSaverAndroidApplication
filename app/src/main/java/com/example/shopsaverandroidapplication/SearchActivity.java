@@ -16,6 +16,8 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,6 +28,13 @@ import model.Product;
 import util.ShopSaverApi;
 
 public class SearchActivity extends AppCompatActivity {
+
+    // TODO: Temporary Firebase Stuff to showcase Signout
+    // Firebase Stuff
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseUser user;
+    private Button signOutButtonTemp;
 
     // Initialise my widgets
     private EditText searchItem;
@@ -55,6 +64,23 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         queue = Volley.newRequestQueue(this);
 
+        // TODO: Temporary Firebase Stuff to showcase Signout
+        // Assign Firebase Stuff
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = firebaseAuth.getCurrentUser();
+        signOutButtonTemp = findViewById(R.id.sign_out_button_temp);
+        signOutButtonTemp.setOnClickListener(view -> {
+                if (user != null && firebaseAuth != null) {
+                // Use the inbuilt signOut() function
+                firebaseAuth.signOut();
+
+                // Move back to the GetStarted Page
+                // That is the MainActivity
+                startActivity(new Intent(SearchActivity.this,
+                        MainActivity.class));
+            }
+        });
+
         // Assign my widgets
         searchItem = findViewById(R.id.item_name);
         // TODO: Platform should be toggle version, so toggle between the shopping platforms
@@ -63,6 +89,7 @@ public class SearchActivity extends AppCompatActivity {
         searchButton = findViewById(R.id.search_item_button);
         progressBar = findViewById(R.id.search_progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
+
 
         // Set a onClick Listener for the searchButton
         // When the searchButton is clicked, get the item results that the user has searched
@@ -112,4 +139,5 @@ public class SearchActivity extends AppCompatActivity {
 
         queue.add(jsonArrayRequest);
     }
+
 }
