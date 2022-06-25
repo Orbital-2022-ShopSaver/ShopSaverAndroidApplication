@@ -104,6 +104,13 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Add the products to the arrayList variable productArrayList
+     * Products will be retrieved from an API Call
+     * Once we have assigned the products, we move on to the DisplayResultsActivity
+     * @param item the product that the user is searching for
+     * @param platform the digital shopping platform choice of the user
+     */
     // This method is responsible for adding the products to the arrayList
     // The products will be retrieved from an API Call
     // After we get the products, we move on to the DisplayResultsActivity

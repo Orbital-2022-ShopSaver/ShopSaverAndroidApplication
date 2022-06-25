@@ -88,6 +88,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Validates and login the user if the email and password entered is in database
+     * @param email the email entered by the user
+     * @param pwd the password entered by the user
+     */
     // This method will handle logging in of the user
     private void loginEmailPasswordUser(String email, String pwd) {
 

@@ -102,6 +102,13 @@ public class CreateAccountActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * Creates the account inside our Firebase Database
+     * @param email the email entered by the user
+     * @param password the password entered by the user
+     * @param username the username entered by the user
+     */
     // This is the method to create the account
     private void createUserEmailAccount(String email, String password, String username) {
         // Validate the input fields
@@ -209,7 +216,6 @@ public class CreateAccountActivity extends AppCompatActivity {
     // Before we show user stuff on the screen,
     // We want to make sure all the Firebase stuff is set up
     // So we do it in onStart()
-
 
     @Override
     protected void onStart() {
