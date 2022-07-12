@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.squareup.picasso.Picasso;
 
 import model.Product;
 import util.ShopSaverApi;
@@ -30,13 +32,17 @@ public class ShowProductActivity extends AppCompatActivity {
     private TextView productName;
     private TextView productPrice;
     private TextView productUrl;
+    private ImageView productImage;
     private Button addToTrackButton;
     private ProgressBar addProductProgressBar;
 
     // Initialise fields regarding the data of the product
     private String name;
-    private String price;
+    private double price;
     private String url;
+    private String image;
+    private String platform;
+
 
     // Initialise fields regarding user details
     private String currentUserId;
@@ -68,18 +74,29 @@ public class ShowProductActivity extends AppCompatActivity {
         productName = findViewById(R.id.item_name_product);
         productPrice = findViewById(R.id.item_price_product);
         productUrl = findViewById(R.id.item_url_product);
+        productImage = findViewById(R.id.item_image_product);
         addToTrackButton = findViewById(R.id.add_to_track_button);
+
+
         addProductProgressBar = findViewById(R.id.add_product_progress_bar);
         addProductProgressBar.setVisibility(View.INVISIBLE);
 
         // Get the data from the data from the intent that I passed
         if (extra != null) {
             name = extra.getString("name");
-            price = extra.getString("price");
+            price = extra.getDouble("price");
             url = extra.getString("url");
+            platform = extra.getString("platform");
+            image = extra.getString("image");
             productName.setText(name);
-            productPrice.setText(price);
+            productPrice.setText(Double.toString(price));
             productUrl.setText(url);
+
+            Picasso.get()
+                    .load(image)
+                    .into(productImage);
+
+
         }
 
         // Get Firebase instance
@@ -110,7 +127,7 @@ public class ShowProductActivity extends AppCompatActivity {
             // Set progressBar visible to showcase adding process ongoing
             addProductProgressBar.setVisibility(View.VISIBLE);
 
-            Product product = new Product(name, price, url,
+            Product product = new Product(name, price, url, platform, image,
                     currentUserId, currentUserName, currentUserEmail);
 
             // Invoke our Database, and add the item inside

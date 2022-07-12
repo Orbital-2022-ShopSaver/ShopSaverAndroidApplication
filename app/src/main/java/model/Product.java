@@ -6,8 +6,10 @@ package model;
 public class Product {
 
     private String name;
-    private String price;
+    private double price;
     private String url;
+    private String platform;
+    private String image;
 
     // Subsequent fields is to get hold of the user details if user wants to add
     private String userId;
@@ -18,22 +20,28 @@ public class Product {
     // Must have an empty constructor for Firestore to work
     public Product(){}
 
+
     // This constructor is just to show the item info
-    public Product(String name, String price, String url) {
+    public Product(String name, double price, String url, String platform, String image) {
         this.name = name;
         this.price = price;
         this.url = url;
+        this.platform = platform;
+        this.image = image;
     }
 
     // This constructor is to be used when user adds an item to be tracked
-    public Product(String name, String price, String url, String userId, String userName, String userEmail) {
+    public Product(String name, double price, String url, String platform, String image, String userId, String userName, String userEmail) {
         this.name = name;
         this.price = price;
         this.url = url;
+        this.platform = platform;
+        this.image = image;
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
     }
+
 
     // Getters and Setters
 
@@ -70,19 +78,35 @@ public class Product {
         this.name = name;
     }
 
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(String price) {
-        this.price = price;
-    }
-
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getPlatform() {
+        return platform;
+    }
+
+    public void setPlatform(String platform) {
+        this.platform = platform;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

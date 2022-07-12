@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.shopsaverandroidapplication.DisplayResultsActivity;
 import com.example.shopsaverandroidapplication.R;
 import com.example.shopsaverandroidapplication.ShowProductActivity;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -49,8 +52,16 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         Product product = productList.get(position);
 
         holder.name.setText(product.getName());
-        holder.price.setText(product.getPrice());
+        holder.price.setText(Double.toString(product.getPrice()));
         holder.url.setText(product.getUrl());
+        holder.platform.setText(product.getPlatform());
+        holder.imageUrl = product.getImage();
+        holder.itemPrice = product.getPrice();
+        Picasso.get()
+                .load(product.getImage())
+                .into(holder.image);
+
+
     }
 
     @Override
@@ -60,8 +71,11 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView name, price, url;
+        public TextView name, price, url, platform;
+        public ImageView image;
         public Button addToListButton;
+        public String imageUrl;
+        public double itemPrice;
 
 
 
@@ -73,14 +87,18 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
             name = itemView.findViewById(R.id.item_name_list);
             price = itemView.findViewById(R.id.item_price_list);
             url = itemView.findViewById(R.id.item_url_list);
+            platform = itemView.findViewById(R.id.item_platform_list);
+            image = itemView.findViewById(R.id.item_image_list);
             addToListButton = itemView.findViewById(R.id.go_to_item_button);
 
             // When button is clicked, we should add it to a tracking list
             addToListButton.setOnClickListener(view -> {
                 // Test out if can get the item first
                 String nameValue = name.getText().toString();
-                String priceValue = price.getText().toString();
+                double priceValue = itemPrice;
                 String urlValue = url.getText().toString();
+                String platformValue = platform.getText().toString();
+                String imageValue = imageUrl;
                 // TODO: Not sure how to add the item to a list
                 // TODO: I think probably can create another activity for it
                 // TODO: Then we pass these values
@@ -91,6 +109,8 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
                 intent.putExtra("name", nameValue);
                 intent.putExtra("price", priceValue);
                 intent.putExtra("url", urlValue);
+                intent.putExtra("platform", platformValue);
+                intent.putExtra("image", imageValue);
                 context.startActivity(intent);
             });
         }

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
@@ -23,16 +24,26 @@ import java.util.ArrayList;
 import model.Product;
 import util.ShopSaverApi;
 
+
 public class SearchActivity extends AppCompatActivity {
+
+    // Count the number of requests
+    // This is to track such that once all the requests are fulfilled, we can display results
+    private int numOfRequests = 0;
 
     // Initialise my widgets
     private EditText searchItem;
-    // TODO: By right searchPlatform should be like we can search multiple platforms
-    private EditText searchPlatform;
+
+    // Use checkboxes to check if the boxes are checked, to execute the search
+    // This helps us determine which platform the user wants
+    private CheckBox amazonCheckbox;
+    private CheckBox lazadaCheckbox;
+    private CheckBox qootenCheckbox;
+
     private Button searchButton;
     private ProgressBar progressBar;
 
-    // TODO: Hardcoded endpoint, but will change
+    // apiEndpoint to make the GET Calls to
     private String apiEndpoint = "https://testwebapiformyself.herokuapp.com/";
 
     // Initialise a queue, which will be used by Volley
@@ -50,9 +61,9 @@ public class SearchActivity extends AppCompatActivity {
 
         // Assign my widgets
         searchItem = findViewById(R.id.item_name);
-        // TODO: Platform should be toggle version, so toggle between the shopping platforms
-        // TODO: But for now we just assume is from Amazon (use String Amazon)
-        searchPlatform = findViewById(R.id.search_platform);
+        amazonCheckbox = findViewById(R.id.amazonCheckbox);
+        lazadaCheckbox = findViewById(R.id.lazadaCheckbox);
+        qootenCheckbox = findViewById(R.id.qootenCheckbox);
         searchButton = findViewById(R.id.search_item_button);
         progressBar = findViewById(R.id.search_progress_bar);
         progressBar.setVisibility(View.INVISIBLE);
@@ -64,46 +75,77 @@ public class SearchActivity extends AppCompatActivity {
         searchButton.setOnClickListener(view -> {
             progressBar.setVisibility(View.VISIBLE);
             String item = searchItem.getText().toString();
-            String platform = searchItem.getText().toString();
 
-            addProductsToListThenDisplayResults(item, platform);
+            addProductsToListThenDisplayResults(item);
 
         });
     }
 
-    // This method is responsible for adding the products to the arrayList
-    // The products will be retrieved from an API Call
-    // After we get the products, we move on to the DisplayResultsActivity
-    private void addProductsToListThenDisplayResults(String item, String platform) {
-        productArrayList.clear();
-        String apiUrl = apiEndpoint + item;
+    /**
+     * This method is responsible for creating the Json Request, based on the API Endpoint
+     * @param api then API Endpoint to make the request to
+     */
+    private void createJsonArrayRequest(String api) {
+        numOfRequests += 1;
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
-                apiUrl, null, response -> {
+                api, null, response -> {
             for (int i = 0; i < response.length(); i++) {
                 try {
                     JSONObject jsonObject = response.getJSONObject(i);
                     String name = jsonObject.getString("name");
-                    String price = jsonObject.getString("price");
+                    double price = jsonObject.getDouble("price");
                     String url = jsonObject.getString("url");
-                    Log.d("Product", name + price + url);
-                    Product itemProduct = new Product(name, price, url);
+                    String platform = jsonObject.getString("platform");
+                    String image = jsonObject.getString("image");
+                    Product itemProduct = new Product(name, price, url, platform, image);
                     productArrayList.add(itemProduct);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+            // Subtract from the numOfRequests once request has been fulfilled
+            numOfRequests -= 1;
 
             progressBar.setVisibility(View.INVISIBLE);
             // After we get the products, we set it to be global with the ShopSaverApi
             ShopSaverApi shopSaverApi = ShopSaverApi.getInstance();
             shopSaverApi.setProductArrayList(productArrayList);
 
-            // Once we have gotten the items, we move on to the DisplayResultsActivity
-            startActivity(new Intent(SearchActivity.this,
-                    DisplayResultsActivity.class));
+            if (numOfRequests == 0) {
+                // Once we have gotten all the items, we move on to the DisplayResultsActivity
+                // This is achieved when we finally have zero requests left
+                startActivity(new Intent(SearchActivity.this,
+                        DisplayResultsActivity.class));
+            }
         }, error -> Log.d("JSON", "Error creating Object"));
 
         queue.add(jsonArrayRequest);
+
+    }
+
+    /**
+     * This method is responsible for adding the products to the arrayList
+     * The products will be retrieved from an API Call
+     * @param item the item that the user is searching for
+     */
+    private void addProductsToListThenDisplayResults(String item) {
+        productArrayList.clear();
+        String apiAmazon = apiEndpoint + "amazon/" + item;
+        String apiLazada = apiEndpoint + "lazada/" + item;
+        String apiQooten = apiEndpoint + "qooten/" + item;
+
+        // Initialise the JsonArrayRequest depending on the platform the user wants to search
+        if (amazonCheckbox.isChecked()) {
+            createJsonArrayRequest(apiAmazon);
+        }
+
+        if (lazadaCheckbox.isChecked()) {
+            createJsonArrayRequest(apiLazada);
+        }
+
+        if (qootenCheckbox.isChecked()) {
+            createJsonArrayRequest(apiQooten);
+        }
     }
 }
