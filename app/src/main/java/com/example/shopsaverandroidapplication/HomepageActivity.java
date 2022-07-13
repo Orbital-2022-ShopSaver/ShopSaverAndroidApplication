@@ -16,7 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 // When clicked on ItemListActivity, user will be taken to see a list of items being tracked
 // When clicked on SearchActivity, user will be taken to search a list of items
 
-// TODO: Will do up the homepage stuff
 public class HomepageActivity extends AppCompatActivity {
 
     // Firebase Stuff
@@ -27,7 +26,12 @@ public class HomepageActivity extends AppCompatActivity {
     // Get my widgets
     private Button trackingListButton;
     private Button searchButton;
+    private Button userGuideButton;
 
+    /**
+     * This method will run upon creation of the Activity
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +44,7 @@ public class HomepageActivity extends AppCompatActivity {
         // Assign my widgets
         trackingListButton = findViewById(R.id.button_tracking_list);
         searchButton = findViewById(R.id.button_search);
+        userGuideButton = findViewById(R.id.button_user_guide);
 
         // Add onClick Listener to trackingListButton
         // When clicked, I will be taken to TrackingListActivity (will show list of tracking items)
@@ -53,8 +58,19 @@ public class HomepageActivity extends AppCompatActivity {
         searchButton.setOnClickListener(view -> {
             startActivity(new Intent(HomepageActivity.this, SearchActivity.class));
         });
+
+        // Add onClick Listener to userGuideButton
+        // When clicked, I will be taken to a UserGuideActivity to understand how the App works
+        userGuideButton.setOnClickListener(view -> {
+            startActivity(new Intent(HomepageActivity.this, UserGuideActivity.class));
+        });
     }
 
+    /**
+     * This method is responsible for creating my Menu
+     * @param menu the menu and its options
+     * @return the inflated version of the menu, so it can be interacted with
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu (with the signout option)
@@ -62,6 +78,12 @@ public class HomepageActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    /**
+     * This method is responsible for triggering other activities when my menu options are clicked
+     * The activity triggered depends on which menu options was clicked
+     * @param item the menu item that was selected
+     * @return the onOptionsItemSelected, with the item being clicked
+     */
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 

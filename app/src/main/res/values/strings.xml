@@ -20,4 +20,29 @@
     <string name="placeholder_text">Placeholder</string>
     <string name="add_item_to_track_text">Add Item to Track</string>
     <string name="no_products">No Products Added to Track</string>
+    <string name="user_guide_text">User Guide</string>
+    <string name="add_text">add</string>
+    <string name="track_text">Track</string>
+    <string name="get_started">Click on Any of the Tabs to Find out More</string>
+    <string name="home">Home</string>
+
+    <string name="search_info">
+        Click on the Search Tab at the Homepage\n\n
+        Enter the name of the item you want to search for\n\n
+        After that, select from 3 Platforms, Amazon, Lazada and Qoo10\n\n
+        Select at least 1 of them, and up to all of them\n\n
+        After that, click Search to get your Results
+    </string>
+    <string name="add_info">
+        Found an item that you want track?\n\n
+        When the item results are displayed, click on the item\n\n
+        Key in your expected price that you wish to purchase the item for\n\n
+        After that, you can add it to be tracked
+    </string>
+    <string name="track_info">
+        Click on the Tracking List Button to see the items you are currently tracking\n\n
+        Run the Update Button to see the latest prices of your items\n\n
+        Should any of the prices meet your expectation, go ahead and purchase it!
+    </string>
+
 </resources>
