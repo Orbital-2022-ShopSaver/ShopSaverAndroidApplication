@@ -6,6 +6,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="16dp"
+    android:background="@drawable/gradient_bg"
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
@@ -37,12 +38,12 @@
         <!--        Use textPassword inputType in this case-->
         <EditText
             android:id="@+id/password"
-            android:hint="@string/password_hint"
-            android:layout_marginTop="16dp"
-            android:inputType="textPassword"
-            android:maxLines="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/password_login_hint"
+            android:inputType="textPassword"
+            android:maxLines="1" />
 
         <Button
             android:id="@+id/email_sign_in_button"

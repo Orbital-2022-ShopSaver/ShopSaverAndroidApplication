@@ -39,7 +39,10 @@ public class MainActivity extends AppCompatActivity {
     // Get the path to the "Users" part of DB
     private CollectionReference collectionReference = db.collection("Users");
 
-
+    /**
+     * This method will run upon creation of the Activity
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,11 +105,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // When we start, engage the Firebase variables
 
+    /**
+     * This method is responsible for the start of the Activity
+     */
     @Override
     protected void onStart() {
         super.onStart();
+        // When we start, engage the Firebase variables
         currentUser = firebaseAuth.getCurrentUser();
         firebaseAuth.addAuthStateListener(authStateListener);
     }

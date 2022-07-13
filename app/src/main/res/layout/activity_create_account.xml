@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:layout_height="match_parent"
+    android:background="@drawable/gradient_bg"
     tools:context=".CreateAccountActivity">
 
     <!--    ProgressBar is to like show something in progress when an action is ongoing-->
@@ -47,22 +48,22 @@
         <!--        Use textPassword inputType in this case-->
         <EditText
             android:id="@+id/password_account"
-            android:hint="@string/password_hint"
-            android:layout_marginTop="16dp"
-            android:inputType="textPassword"
-            android:maxLines="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/password_create_hint"
+            android:inputType="textPassword"
+            android:maxLines="1" />
 
         <Button
             android:id="@+id/create_acct_button"
-            android:textColor="@color/teal_200"
-            android:text="@string/create_text"
-            android:background="@android:color/transparent"
-            android:layout_marginTop="16dp"
-            android:textStyle="bold"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/purple_200"
+            android:text="@string/create_text"
+            android:textColor="@color/teal_200"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

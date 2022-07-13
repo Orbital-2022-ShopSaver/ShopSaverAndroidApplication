@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,7 +33,7 @@ import util.ShopSaverApi;
 
 // This class is focused on creating an account for the user
 // After validating the fields, we will create an account for the user
-// The user's data will be stored in Firebase Store
+// The user's data will be stored in Firebase Store, which is our Database
 public class CreateAccountActivity extends AppCompatActivity {
 
     // Initialise Firebase Fields
@@ -54,6 +55,10 @@ public class CreateAccountActivity extends AppCompatActivity {
     private Button createAcctButton;
 
 
+    /**
+     * This method will run upon creation of the Activity
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,25 +88,43 @@ public class CreateAccountActivity extends AppCompatActivity {
         // Else, we notify the users of any issue when making database (empty fields)
         createAcctButton.setOnClickListener(view -> {
             // Validate the input fields
+            // Ensure password length is minimally 10 characters
+            // Ensure username is minimally 8 characters
+            // Ensure email is a gmail
             // TODO: For now we set it to non-empty, but probably need better validations
-            if (!TextUtils.isEmpty(emailEditText.getText().toString()) &&
-            !TextUtils.isEmpty(passwordEditText.getText().toString()) &&
-            !TextUtils.isEmpty(usernameEditText.getText().toString())) {
-                // If input fields valid, get the field values
-                String email = emailEditText.getText().toString().trim();
-                String password = passwordEditText.getText().toString().trim();
-                String username = usernameEditText.getText().toString().trim();
+            String email = emailEditText.getText().toString().trim();
+            String password = passwordEditText.getText().toString().trim();
+            String username = usernameEditText.getText().toString().trim();
+
+            // If input fields valid, create the account
+            if (inputFieldsValid(email,password, username)) {
 
                 // Use the createUserEmailAccount method to create the account
                 createUserEmailAccount(email, password, username);
             } else {
                 // If invalid, notify the user
                 Toast.makeText(CreateAccountActivity.this,
-                        "Empty Fields are not Allowed", Toast.LENGTH_LONG).show();
+                        "One or more Invalid Fields", Toast.LENGTH_LONG).show();
             }
         });
 
     }
+
+    private boolean inputFieldsValid(String email, String password, String username) {
+        boolean emailValid = !TextUtils.isEmpty(email) &&
+                Patterns.EMAIL_ADDRESS.matcher(email).matches();
+        boolean passwordValid = !TextUtils.isEmpty(password) && password.length() >= 10;
+        boolean usernameValid = !TextUtils.isEmpty(username) && username.length() >= 8;
+
+        return emailValid && passwordValid && usernameValid;
+    }
+
+    /**
+     * This method is responsible for creating the account in the Database
+     * @param email the email entered by the user
+     * @param password the password entered by the user
+     * @param username the username entered by the user
+     */
     // This is the method to create the account
     private void createUserEmailAccount(String email, String password, String username) {
         // Validate the input fields
@@ -206,11 +229,13 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
     }
 
+
     // Before we show user stuff on the screen,
     // We want to make sure all the Firebase stuff is set up
     // So we do it in onStart()
-
-
+    /**
+     * This method is responsible for the start of the Activity
+     */
     @Override
     protected void onStart() {
         super.onStart();

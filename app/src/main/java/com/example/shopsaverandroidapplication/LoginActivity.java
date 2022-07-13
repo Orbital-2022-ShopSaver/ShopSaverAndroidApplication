@@ -55,6 +55,10 @@ public class LoginActivity extends AppCompatActivity {
     private EditText password;
     private ProgressBar progressBar;
 
+    /**
+     * This method will run upon creation of the Activity
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +92,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    // This method will handle logging in of the user
+    /**
+     * This method is responsible for logging in the user
+     * @param email the email that the user entered
+     * @param pwd the password that the user entered
+     */
     private void loginEmailPasswordUser(String email, String pwd) {
 
         // We set progressBar to visible, to indicate something is ongoing
@@ -154,7 +162,7 @@ public class LoginActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.INVISIBLE);
                             // Log that failed to login
                             // TODO: Probably should tell the user
-                            Log.d("Failure", "Failed to login");
+                            Toast.makeText(LoginActivity.this, "Invalid Account", Toast.LENGTH_SHORT).show();
                         }
                     });
 

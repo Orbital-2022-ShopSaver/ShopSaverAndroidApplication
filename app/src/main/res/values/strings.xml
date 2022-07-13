@@ -5,11 +5,12 @@
     <string name="text_shop_better_today">Shop Better Today.</string>
     <string name="text_get_started">Get Started</string>
     <string name="email_hint">Email</string>
-    <string name="password_hint">Password</string>
+    <string name="password_create_hint">Password (at least 10 characters)</string>
+    <string name="password_login_hint">Password</string>
     <string name="login_text">Login</string>
     <string name="or_text">OR</string>
     <string name="create_text">Create Account</string>
-    <string name="username_hint">Username</string>
+    <string name="username_hint">Username (at least 8 characters)</string>
     <string name="tracking_list_text">Tracking List</string>
     <string name="search_text">Search</string>
     <string name="enter_item_here_text">Enter Item Here</string>
