@@ -3,6 +3,8 @@ package com.example.shopsaverandroidapplication;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.CollapsibleActionView;
@@ -42,6 +44,7 @@ public class ShowProductActivity extends AppCompatActivity {
     private EditText priceExpectationText;
     private Button addButton;
     private Button closeButton;
+    private Button visitItemButton;
 
     // Initialise fields regarding the data of the product
     private String name;
@@ -68,6 +71,10 @@ public class ShowProductActivity extends AppCompatActivity {
     // Wants to track
     private CollectionReference collectionReference = db.collection("Products");
 
+    /**
+     * This method will run upon creation of the Activity
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,6 +92,7 @@ public class ShowProductActivity extends AppCompatActivity {
         priceExpectationText = findViewById(R.id.price_expectation_text);
         addButton = findViewById(R.id.add_button);
         closeButton = findViewById(R.id.close_button);
+        visitItemButton = findViewById(R.id.visit_item_button);
 
 
         addProductProgressBar = findViewById(R.id.add_product_progress_bar);
@@ -109,8 +117,6 @@ public class ShowProductActivity extends AppCompatActivity {
             Picasso.get()
                     .load(image)
                     .into(productImage);
-
-
         }
 
         // Get Firebase instance
@@ -139,6 +145,15 @@ public class ShowProductActivity extends AppCompatActivity {
             priceExpectationText.setVisibility(View.VISIBLE);
             closeButton.setVisibility(View.VISIBLE);
             addToTrackButton.setVisibility(View.INVISIBLE);
+            visitItemButton.setVisibility(View.INVISIBLE);
+        });
+
+        // Add an onClick Listener to visitItem Button
+        // When clicked, open up the web and go to item url
+        visitItemButton.setOnClickListener(view -> {
+            Intent visitIntent = new Intent(Intent.ACTION_VIEW);
+            visitIntent.setData(Uri.parse(url));
+            startActivity(visitIntent);
         });
 
 
@@ -191,10 +206,17 @@ public class ShowProductActivity extends AppCompatActivity {
             priceExpectationText.setVisibility(View.INVISIBLE);
             closeButton.setVisibility(View.INVISIBLE);
             addToTrackButton.setVisibility(View.VISIBLE);
+            visitItemButton.setVisibility(View.VISIBLE);
         });
 
     }
 
+    /**
+     * This method checks if the priceText entered is valid
+     * E.g should not have dollar sign, characters, etc...
+     * @param priceText
+     * @return boolean value that tells us if the price entered is valid or not
+     */
     private boolean validPriceEntered(String priceText) {
 
         if (priceText.isEmpty()) {
@@ -207,9 +229,12 @@ public class ShowProductActivity extends AppCompatActivity {
         } catch (NumberFormatException e) {
             return false;
         }
-
-
     }
+
+
+    /**
+     * This method is responsible for the start of the Activity
+     */
     @Override
     protected void onStart() {
         super.onStart();
@@ -217,9 +242,13 @@ public class ShowProductActivity extends AppCompatActivity {
         firebaseAuth.addAuthStateListener(authStateListener);
     }
 
-    // When stopped, we do not want to listen anymore
+
+    /**
+     * This method is responsible for the stop of the Activity
+     */
     @Override
     protected void onStop() {
+        // When stopped, we do not want to listen anymore
         super.onStop();
         if (firebaseAuth != null) {
             firebaseAuth.removeAuthStateListener(authStateListener);
