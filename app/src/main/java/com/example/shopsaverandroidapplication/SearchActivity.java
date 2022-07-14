@@ -53,6 +53,10 @@ public class SearchActivity extends AppCompatActivity {
     // To display the list of products
     ArrayList<Product> productArrayList = new ArrayList<>();
 
+    /**
+     * This method will run upon creation of the Activity
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

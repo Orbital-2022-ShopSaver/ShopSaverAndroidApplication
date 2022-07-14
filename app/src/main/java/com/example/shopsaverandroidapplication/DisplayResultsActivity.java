@@ -22,6 +22,10 @@ public class DisplayResultsActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private ProductRecyclerAdapter productRecyclerAdapter;
 
+    /**
+     * This method will run upon creation of the Activity
+     * @param savedInstanceState the savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,9 @@ public class DisplayResultsActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method is responsible for the start of the Activity
+     */
     @Override
     protected void onStart() {
         super.onStart();

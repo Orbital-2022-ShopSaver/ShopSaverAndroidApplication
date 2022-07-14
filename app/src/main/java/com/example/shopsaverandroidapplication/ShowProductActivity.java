@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.CollapsibleActionView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -20,6 +22,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
+
+import java.util.Locale;
 
 import model.Product;
 import util.ShopSaverApi;
@@ -35,6 +39,9 @@ public class ShowProductActivity extends AppCompatActivity {
     private ImageView productImage;
     private Button addToTrackButton;
     private ProgressBar addProductProgressBar;
+    private EditText priceExpectationText;
+    private Button addButton;
+    private Button closeButton;
 
     // Initialise fields regarding the data of the product
     private String name;
@@ -42,7 +49,6 @@ public class ShowProductActivity extends AppCompatActivity {
     private String url;
     private String image;
     private String platform;
-
 
     // Initialise fields regarding user details
     private String currentUserId;
@@ -76,10 +82,18 @@ public class ShowProductActivity extends AppCompatActivity {
         productUrl = findViewById(R.id.item_url_product);
         productImage = findViewById(R.id.item_image_product);
         addToTrackButton = findViewById(R.id.add_to_track_button);
+        priceExpectationText = findViewById(R.id.price_expectation_text);
+        addButton = findViewById(R.id.add_button);
+        closeButton = findViewById(R.id.close_button);
 
 
         addProductProgressBar = findViewById(R.id.add_product_progress_bar);
         addProductProgressBar.setVisibility(View.INVISIBLE);
+        // Initially, priceExpectationText, addButton and closeButton will be invisible
+        // Only visible when user wants to add
+        priceExpectationText.setVisibility(View.INVISIBLE);
+        addButton.setVisibility(View.INVISIBLE);
+        closeButton.setVisibility(View.INVISIBLE);
 
         // Get the data from the data from the intent that I passed
         if (extra != null) {
@@ -89,7 +103,7 @@ public class ShowProductActivity extends AppCompatActivity {
             platform = extra.getString("platform");
             image = extra.getString("image");
             productName.setText(name);
-            productPrice.setText(Double.toString(price));
+            productPrice.setText(String.format(Locale.ENGLISH,"%.2f", price));
             productUrl.setText(url);
 
             Picasso.get()
@@ -118,42 +132,84 @@ public class ShowProductActivity extends AppCompatActivity {
             }
         };
 
-
         // Add an onClick Listener to the addItemToTrack Button
-        // When clicked we will add an item to be tracked in the Database
-        // That will be tied to the user's details
+        // When clicked, we will display the addButton, priceExpectationText and closeButton
         addToTrackButton.setOnClickListener(view -> {
-            // Create the product object to be added
-            // Set progressBar visible to showcase adding process ongoing
-            addProductProgressBar.setVisibility(View.VISIBLE);
-
-            Product product = new Product(name, price, url, platform, image,
-                    currentUserId, currentUserName, currentUserEmail);
-
-            // Invoke our Database, and add the item inside
-            collectionReference.add(product)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            // If successful, create a toast to tell user is success
-                            // Make progressBar invisible after this since process done
-                            addProductProgressBar.setVisibility(View.INVISIBLE);
-                            Toast.makeText(ShowProductActivity.this, "Successfully added"
-                                    , Toast.LENGTH_SHORT).show();
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            addProductProgressBar.setVisibility(View.INVISIBLE);
-                            Log.d("Failure", "Failed to add item");
-                        }
-                    });
+            addButton.setVisibility(View.VISIBLE);
+            priceExpectationText.setVisibility(View.VISIBLE);
+            closeButton.setVisibility(View.VISIBLE);
+            addToTrackButton.setVisibility(View.INVISIBLE);
+        });
 
 
+        // Add an onClick Listener to the add Button
+        // When clicked we will add an item to be tracked in the Database
+        // TODO: Validate that price expectation entered is valid
+        // That will be tied to the user's details
+        addButton.setOnClickListener(view -> {
+
+            String priceText = priceExpectationText.getText().toString();
+            if (validPriceEntered(priceText)) {
+                // Create the product object to be added
+                // Set progressBar visible to showcase adding process ongoing
+                addProductProgressBar.setVisibility(View.VISIBLE);
+
+                Product product = new Product(name, price, url, platform, image,
+                        currentUserId, currentUserName,
+                        currentUserEmail, Double.parseDouble(priceText));
+
+                // Invoke our Database, and add the item inside
+                collectionReference.add(product)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                            @Override
+                            public void onSuccess(DocumentReference documentReference) {
+                                // If successful, create a toast to tell user is success
+                                // Make progressBar invisible after this since process done
+                                addProductProgressBar.setVisibility(View.INVISIBLE);
+                                Toast.makeText(ShowProductActivity.this, "Successfully added"
+                                        , Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                addProductProgressBar.setVisibility(View.INVISIBLE);
+                                Log.d("Failure", "Failed to add item");
+                            }
+                        });
+            }
+            else {
+                Toast.makeText(this, "Enter valid numbers", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        // Add an onClickListener to closeButton
+        // When clicked, revert back to original state
+        // That means add, close and text invisible, but addToTrack visible
+        closeButton.setOnClickListener(view -> {
+            addButton.setVisibility(View.INVISIBLE);
+            priceExpectationText.setVisibility(View.INVISIBLE);
+            closeButton.setVisibility(View.INVISIBLE);
+            addToTrackButton.setVisibility(View.VISIBLE);
         });
 
     }
 
+    private boolean validPriceEntered(String priceText) {
+
+        if (priceText.isEmpty()) {
+            return false;
+        }
+
+        try {
+            double price = Double.parseDouble(priceText);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+
+    }
     @Override
     protected void onStart() {
         super.onStart();

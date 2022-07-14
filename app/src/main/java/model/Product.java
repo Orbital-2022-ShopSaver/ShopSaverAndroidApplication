@@ -10,6 +10,7 @@ public class Product {
     private String url;
     private String platform;
     private String image;
+    private double priceExpectation;
 
     // Subsequent fields is to get hold of the user details if user wants to add
     private String userId;
@@ -31,7 +32,8 @@ public class Product {
     }
 
     // This constructor is to be used when user adds an item to be tracked
-    public Product(String name, double price, String url, String platform, String image, String userId, String userName, String userEmail) {
+    public Product(String name, double price, String url, String platform, String image,
+                   String userId, String userName, String userEmail, double priceExpectation) {
         this.name = name;
         this.price = price;
         this.url = url;
@@ -40,6 +42,7 @@ public class Product {
         this.userId = userId;
         this.userName = userName;
         this.userEmail = userEmail;
+        this.priceExpectation = priceExpectation;
     }
 
 

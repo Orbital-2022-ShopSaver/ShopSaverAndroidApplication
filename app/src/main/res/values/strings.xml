@@ -26,6 +26,17 @@
     <string name="get_started">Click on Any of the Tabs to Find out More</string>
     <string name="home">Home</string>
 
+<!--    Product Placeholder Names-->
+    <string name="name_placeholder">Name</string>
+    <string name="price_text">Price</string>
+    <string name="url_text">Url</string>
+
+<!--    Platform Names-->
+    <string name="amazon">Amazon</string>
+    <string name="lazada">Lazada</string>
+    <string name="qooten">Qoo10</string>
+
+<!--    User Guide Info-->
     <string name="search_info">
         Click on the Search Tab at the Homepage\n\n
         Enter the name of the item you want to search for\n\n
@@ -44,5 +55,7 @@
         Run the Update Button to see the latest prices of your items\n\n
         Should any of the prices meet your expectation, go ahead and purchase it!
     </string>
+    <string name="price_expectation">Price Expectation (e.g 32.25)</string>
+    <string name="close_text">Close</string>
 
 </resources>

@@ -20,6 +20,7 @@ import com.example.shopsaverandroidapplication.ShowProductActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+import java.util.Locale;
 
 import model.Product;
 
@@ -52,13 +53,14 @@ public class ProductRecyclerAdapter extends RecyclerView.Adapter<ProductRecycler
         Product product = productList.get(position);
 
         holder.name.setText(product.getName());
-        holder.price.setText(Double.toString(product.getPrice()));
+        holder.price.setText(String.format(Locale.ENGLISH,"%.2f", product.getPrice()));
         holder.url.setText(product.getUrl());
         holder.platform.setText(product.getPlatform());
         holder.imageUrl = product.getImage();
         holder.itemPrice = product.getPrice();
         Picasso.get()
                 .load(product.getImage())
+                .fit()
                 .into(holder.image);
 
 
