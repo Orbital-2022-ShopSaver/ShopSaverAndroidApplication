@@ -17,6 +17,9 @@ public class Product {
     private String userName;
     private String userEmail;
 
+    // Document ID from the Firebase
+    private String documentId;
+
 
     // Must have an empty constructor for Firestore to work
     public Product(){}
@@ -43,6 +46,24 @@ public class Product {
         this.userName = userName;
         this.userEmail = userEmail;
         this.priceExpectation = priceExpectation;
+    }
+
+    // This constructor is to be used when item tracked fetch from database
+    // It will aid in deletion
+
+    public Product(String name, double price, String url, String platform,
+                   String image, double priceExpectation, String userId,
+                   String userName, String userEmail, String documentId) {
+        this.name = name;
+        this.price = price;
+        this.url = url;
+        this.platform = platform;
+        this.image = image;
+        this.priceExpectation = priceExpectation;
+        this.userId = userId;
+        this.userName = userName;
+        this.userEmail = userEmail;
+        this.documentId = documentId;
     }
 
 
@@ -119,5 +140,13 @@ public class Product {
 
     public void setPriceExpectation(double priceExpectation) {
         this.priceExpectation = priceExpectation;
+    }
+
+    public String getDocumentId() {
+        return documentId;
+    }
+
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
     }
 }

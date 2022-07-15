@@ -6,9 +6,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +19,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.shopsaverandroidapplication.R;
 import com.example.shopsaverandroidapplication.ShowProductActivity;
 
+import com.example.shopsaverandroidapplication.TrackingListActivity;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldPath;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -23,10 +35,26 @@ import java.util.Locale;
 
 import model.Product;
 
+
 public class ProductRecyclerTrackingListAdapter extends RecyclerView.Adapter<ProductRecyclerTrackingListAdapter.ViewHolder> {
 
     private Context context;
     private List<Product> productList;
+
+    // Initialise my Firebase stuff
+    // It is necessary since we will be adding items to be tracked
+    private FirebaseAuth firebaseAuth;
+    private FirebaseAuth.AuthStateListener authStateListener;
+    private FirebaseUser user;
+
+    // Establish connection to my Database
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+    // Reference to Products in my Database, which is where we will save the items the user
+    // Wants to track
+    private CollectionReference collectionReference = db.collection("Products");
+
+
 
     // Constructor
     public ProductRecyclerTrackingListAdapter(Context context, List<Product> productList) {
@@ -63,7 +91,86 @@ public class ProductRecyclerTrackingListAdapter extends RecyclerView.Adapter<Pro
                 .fit()
                 .into(holder.image);
 
+        holder.editButton.setOnClickListener(view -> {
+            String priceText = holder.editPriceExpectationText.getText().toString();
+            if (validPriceEntered(priceText)) {
+                // Create the product object to be added
+                // Set progressBar visible to showcase adding process ongoing
+                // TODO: Add a progress Bar
+                String id = product.getDocumentId();
+                double price = Double.parseDouble(priceText);
+                holder.priceExpectation.setText(String.format(Locale.ENGLISH,"%.2f", price));
+                db.collection("Products").document(id)
+                        .update("priceExpectation", price)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Log.d("Success", "Success");
+                                // Make the text empty again, clear focus, hide keyboard
+                                holder.editPriceExpectationText.setText("");
+                                holder.editPriceExpectationText.clearFocus();
+                                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
 
+
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Log.d("Failure", "Failure");
+                            }
+                        });
+
+
+            }
+            else {
+                Toast.makeText(context, "Enter valid numbers", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+        holder.deleteButton.setOnClickListener(view -> {
+            String id = product.getDocumentId();
+            db.collection("Products").document(id)
+                    .delete()
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            Log.d("TAG", "Success");
+                            productList.remove(product);
+                            notifyDataSetChanged();
+
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.d("TAG", "Failure");
+                        }
+                    });
+        });
+
+    }
+
+    // TODO: Should probably create a folder for this since ShowProductActivity use as well
+    /**
+     * This method checks if the priceText entered is valid
+     * E.g should not have dollar sign, characters, etc...
+     * @param priceText
+     * @return boolean value that tells us if the price entered is valid or not
+     */
+    private boolean validPriceEntered(String priceText) {
+
+        if (priceText.isEmpty()) {
+            return false;
+        }
+
+        try {
+            double price = Double.parseDouble(priceText);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     @Override
@@ -74,9 +181,10 @@ public class ProductRecyclerTrackingListAdapter extends RecyclerView.Adapter<Pro
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         public TextView name, price, url, platform, priceExpectation;
+        public EditText editPriceExpectationText;
 
         public ImageView image;
-        public Button deleteButton;
+        public Button deleteButton, editButton;
         public String imageUrl;
         public double itemPrice;
 
@@ -93,33 +201,10 @@ public class ProductRecyclerTrackingListAdapter extends RecyclerView.Adapter<Pro
             url = itemView.findViewById(R.id.item_url_tracking_list);
             platform = itemView.findViewById(R.id.item_platform_tracking_list);
             image = itemView.findViewById(R.id.item_image_tracking_list);
+            editPriceExpectationText = itemView.findViewById(R.id.edit_price_text);
+            editButton = itemView.findViewById(R.id.edit_item_button_tracking_list);
             deleteButton = itemView.findViewById(R.id.delete_item_button_tracking_list);
 
-
-            // When button is clicked, we should add it to a tracking list
-            // TODO: Do up the delete
-            // TODO: Make an edit button
-            deleteButton.setOnClickListener(view -> {
-                // Test out if can get the item first
-                String nameValue = name.getText().toString();
-                double priceValue = itemPrice;
-                String urlValue = url.getText().toString();
-                String platformValue = platform.getText().toString();
-                String imageValue = imageUrl;
-                // TODO: Not sure how to add the item to a list
-                // TODO: I think probably can create another activity for it
-                // TODO: Then we pass these values
-                // Start an intent to go to the activity that showcase product details
-                // For now we just show the same field values
-                Log.d("Item", nameValue + priceValue + urlValue);
-                Intent intent = new Intent(context, ShowProductActivity.class);
-                intent.putExtra("name", nameValue);
-                intent.putExtra("price", priceValue);
-                intent.putExtra("url", urlValue);
-                intent.putExtra("platform", platformValue);
-                intent.putExtra("image", imageValue);
-                context.startActivity(intent);
-            });
         }
 
     }

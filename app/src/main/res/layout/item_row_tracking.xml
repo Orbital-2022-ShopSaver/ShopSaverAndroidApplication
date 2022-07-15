@@ -89,6 +89,31 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
+        <EditText
+            android:id="@+id/edit_price_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/edit_price_expectation_text"
+            android:minHeight="48dp"
+            android:padding="10dp"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="15dp"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/edit_item_button_tracking_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/transparent"
+            android:text="@string/edit_price_expectation_text"
+            android:textColor="@color/teal_700"
+            android:textStyle="bold" />
+
+
+
         <Button
             android:id="@+id/delete_item_button_tracking_list"
             android:layout_width="match_parent"

@@ -41,7 +41,7 @@ public class TrackingListActivity extends AppCompatActivity {
     // Will aid in displaying the products
     private List<Product> productList;
     private RecyclerView recyclerView;
-    private ProductRecyclerTrackingListAdapter productRecyclerAdapter;
+    private ProductRecyclerTrackingListAdapter productRecyclerTrackingListAdapter;
 
     // Get the path to our Products DB
     private CollectionReference collectionReference = db.collection("Products");
@@ -88,16 +88,17 @@ public class TrackingListActivity extends AppCompatActivity {
                             for (QueryDocumentSnapshot products : queryDocumentSnapshots) {
                                 // Convert what we get back to the Journal
                                 Product product = products.toObject(Product.class);
+                                product.setDocumentId(products.getId());
                                 productList.add(product);
                             }
 
                             // After that, invoke the RecyclerView and pass the productList
-                            productRecyclerAdapter = new ProductRecyclerTrackingListAdapter(TrackingListActivity.this,
+                            productRecyclerTrackingListAdapter = new ProductRecyclerTrackingListAdapter(TrackingListActivity.this,
                                     productList);
-                            recyclerView.setAdapter(productRecyclerAdapter);
+                            recyclerView.setAdapter(productRecyclerTrackingListAdapter);
 
                             // Update if any changes
-                            productRecyclerAdapter.notifyDataSetChanged();
+                            productRecyclerTrackingListAdapter.notifyDataSetChanged();
 
                         } else {
                             // If is empty, we show the text that no product entry

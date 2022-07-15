@@ -71,6 +71,7 @@ public class ShowProductActivity extends AppCompatActivity {
     // Wants to track
     private CollectionReference collectionReference = db.collection("Products");
 
+
     /**
      * This method will run upon creation of the Activity
      * @param savedInstanceState the savedInstanceState
@@ -208,6 +209,7 @@ public class ShowProductActivity extends AppCompatActivity {
             addToTrackButton.setVisibility(View.VISIBLE);
             visitItemButton.setVisibility(View.VISIBLE);
         });
+
 
     }
 
