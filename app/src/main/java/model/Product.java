@@ -112,4 +112,12 @@ public class Product {
     public void setImage(String image) {
         this.image = image;
     }
+
+    public double getPriceExpectation() {
+        return priceExpectation;
+    }
+
+    public void setPriceExpectation(double priceExpectation) {
+        this.priceExpectation = priceExpectation;
+    }
 }

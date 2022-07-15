@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Product;
-import ui.ProductRecyclerAdapter;
+import ui.ProductRecyclerTrackingListAdapter;
 import util.ShopSaverApi;
 
 // This activity is responsible for showcasing the list of items the user is tracking
@@ -41,7 +41,7 @@ public class TrackingListActivity extends AppCompatActivity {
     // Will aid in displaying the products
     private List<Product> productList;
     private RecyclerView recyclerView;
-    private ProductRecyclerAdapter productRecyclerAdapter;
+    private ProductRecyclerTrackingListAdapter productRecyclerAdapter;
 
     // Get the path to our Products DB
     private CollectionReference collectionReference = db.collection("Products");
@@ -92,7 +92,7 @@ public class TrackingListActivity extends AppCompatActivity {
                             }
 
                             // After that, invoke the RecyclerView and pass the productList
-                            productRecyclerAdapter = new ProductRecyclerAdapter(TrackingListActivity.this,
+                            productRecyclerAdapter = new ProductRecyclerTrackingListAdapter(TrackingListActivity.this,
                                     productList);
                             recyclerView.setAdapter(productRecyclerAdapter);
 

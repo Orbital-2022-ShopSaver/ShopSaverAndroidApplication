@@ -25,6 +25,7 @@
     <string name="track_text">Track</string>
     <string name="get_started">Click on Any of the Tabs to Find out More</string>
     <string name="home">Home</string>
+    <string name="delete_item_text">Delete Item</string>
 
 <!--    Product Placeholder Names-->
     <string name="name_placeholder">Name</string>
@@ -57,5 +58,6 @@
     </string>
     <string name="price_expectation">Price Expectation (e.g 32.25)</string>
     <string name="close_text">Close</string>
+    <string name="price_expectation_text">Price Expectation</string>
 
 </resources>

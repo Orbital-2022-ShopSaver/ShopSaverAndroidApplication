@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import model.Product;
 import ui.ProductRecyclerAdapter;
+import ui.ProductRecyclerTrackingListAdapter;
 import util.ShopSaverApi;
 
 // This Activity is responsible for displaying the list of results from our search results
