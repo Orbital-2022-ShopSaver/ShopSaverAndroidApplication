@@ -37,7 +37,6 @@ public class ShowProductActivity extends AppCompatActivity {
     // Initialise my widgets
     private TextView productName;
     private TextView productPrice;
-    private TextView productUrl;
     private ImageView productImage;
     private Button addToTrackButton;
     private ProgressBar addProductProgressBar;
@@ -87,7 +86,6 @@ public class ShowProductActivity extends AppCompatActivity {
         // Assign my widgets
         productName = findViewById(R.id.item_name_product);
         productPrice = findViewById(R.id.item_price_product);
-        productUrl = findViewById(R.id.item_url_product);
         productImage = findViewById(R.id.item_image_product);
         addToTrackButton = findViewById(R.id.add_to_track_button);
         priceExpectationText = findViewById(R.id.price_expectation_text);
@@ -113,7 +111,6 @@ public class ShowProductActivity extends AppCompatActivity {
             image = extra.getString("image");
             productName.setText(name);
             productPrice.setText(String.format(Locale.ENGLISH,"%.2f", price));
-            productUrl.setText(url);
 
             Picasso.get()
                     .load(image)

@@ -47,6 +47,7 @@
             android:paddingTop="15dp"
             android:paddingEnd="15dp"
             android:text="@string/price_text"
+            android:textColor="@color/pastelGreen"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -77,16 +78,14 @@
             android:textSize="18sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/item_url_tracking_list"
+        <Button
+            android:id="@+id/go_to_item_button_tracking_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:paddingStart="10dp"
-            android:paddingTop="15dp"
-            android:paddingEnd="15dp"
-            android:text="@string/url_text"
-            android:textSize="18sp"
+            android:layout_marginTop="16dp"
+            android:background="@android:color/transparent"
+            android:text="@string/go_to_item"
+            android:textColor="@color/orange"
             android:textStyle="bold" />
 
         <EditText

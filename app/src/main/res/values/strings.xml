@@ -28,17 +28,17 @@
     <string name="delete_item_text">Delete Item</string>
     <string name="edit_price_expectation_text">Edit Price Expectation</string>
 
-<!--    Product Placeholder Names-->
+    <!--    Product Placeholder Names-->
     <string name="name_placeholder">Name</string>
     <string name="price_text">Price</string>
     <string name="url_text">Url</string>
 
-<!--    Platform Names-->
+    <!--    Platform Names-->
     <string name="amazon">Amazon</string>
     <string name="lazada">Lazada</string>
     <string name="qooten">Qoo10</string>
 
-<!--    User Guide Info-->
+    <!--    User Guide Info-->
     <string name="search_info">
         Click on the Search Tab at the Homepage\n\n
         Enter the name of the item you want to search for\n\n
@@ -60,5 +60,7 @@
     <string name="price_expectation">Price Expectation (e.g 32.25)</string>
     <string name="close_text">Close</string>
     <string name="price_expectation_text">Price Expectation</string>
+    <string name="update_text">Update</string>
+    <string name="change_password_text">Change Password</string>
 
 </resources>

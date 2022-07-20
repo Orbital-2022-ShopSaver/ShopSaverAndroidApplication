@@ -2,6 +2,8 @@ package ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,7 +83,6 @@ public class ProductRecyclerTrackingListAdapter extends RecyclerView.Adapter<Pro
 
         holder.name.setText(product.getName());
         holder.price.setText(String.format(Locale.ENGLISH,"%.2f", product.getPrice()));
-        holder.url.setText(product.getUrl());
         holder.platform.setText(product.getPlatform());
         holder.imageUrl = product.getImage();
         holder.itemPrice = product.getPrice();
@@ -90,6 +91,21 @@ public class ProductRecyclerTrackingListAdapter extends RecyclerView.Adapter<Pro
                 .load(product.getImage())
                 .fit()
                 .into(holder.image);
+
+        // If current price is larger than price expectation, display the holder as red
+        // Else, will be displayed green
+        // This is a visual cue to tell the user if the price is good or not
+        if (product.getPrice() > product.getPriceExpectation()) {
+            holder.price.setTextColor(Color.parseColor("#ff0000"));
+            holder.priceExpectation.setTextColor(Color.parseColor("#ff0000"));
+            holder.priceExpectationText.setTextColor(Color.parseColor("#ff0000"));
+        }
+
+        holder.goToItemButton.setOnClickListener(view -> {
+            Intent visitIntent = new Intent(Intent.ACTION_VIEW);
+            visitIntent.setData(Uri.parse(product.getUrl()));
+            context.startActivity(visitIntent);
+        });
 
         holder.editButton.setOnClickListener(view -> {
             String priceText = holder.editPriceExpectationText.getText().toString();
@@ -111,8 +127,6 @@ public class ProductRecyclerTrackingListAdapter extends RecyclerView.Adapter<Pro
                                 holder.editPriceExpectationText.clearFocus();
                                 InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
                                 imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-
-
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -180,11 +194,11 @@ public class ProductRecyclerTrackingListAdapter extends RecyclerView.Adapter<Pro
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView name, price, url, platform, priceExpectation;
+        public TextView name, price, platform, priceExpectation, priceExpectationText;
         public EditText editPriceExpectationText;
 
         public ImageView image;
-        public Button deleteButton, editButton;
+        public Button deleteButton, editButton, goToItemButton;
         public String imageUrl;
         public double itemPrice;
 
@@ -198,7 +212,8 @@ public class ProductRecyclerTrackingListAdapter extends RecyclerView.Adapter<Pro
             name = itemView.findViewById(R.id.item_name_tracking_list);
             price = itemView.findViewById(R.id.item_price_tracking_list);
             priceExpectation = itemView.findViewById(R.id.item_price_expectation_tracking_list);
-            url = itemView.findViewById(R.id.item_url_tracking_list);
+            priceExpectationText = itemView.findViewById(R.id.price_expectation_text);
+            goToItemButton = itemView.findViewById(R.id.go_to_item_button_tracking_list);
             platform = itemView.findViewById(R.id.item_platform_tracking_list);
             image = itemView.findViewById(R.id.item_image_tracking_list);
             editPriceExpectationText = itemView.findViewById(R.id.edit_price_text);

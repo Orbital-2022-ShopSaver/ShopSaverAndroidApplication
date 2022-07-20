@@ -10,4 +10,9 @@
     <item android:id="@+id/action_signout"
         android:title="@string/signout"
         app:showAsAction="never" />
+
+<!--    A toggle to change password-->
+    <item android:id="@+id/change_password"
+        android:title="@string/change_password_text"
+        app:showAsAction="never" />
 </menu>

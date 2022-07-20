@@ -101,6 +101,11 @@ public class HomepageActivity extends AppCompatActivity {
                             MainActivity.class));
                 }
                 break;
+
+            case R.id.change_password:
+                startActivity(new Intent(HomepageActivity.this,
+                        ChangePasswordActivity.class));
+
         }
         return super.onOptionsItemSelected(item);
     }
