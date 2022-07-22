@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -44,9 +44,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_password);
 
         // Assign my widgets
-        originalPasswordText = findViewById(R.id.original_password_text);
+        originalPasswordText = findViewById(R.id.email_text_input);
         newPasswordText = findViewById(R.id.new_password_text);
-        changePasswordButton = findViewById(R.id.change_password_button);
+        changePasswordButton = findViewById(R.id.send_button);
 
         // Assign Firebase stuff
         firebaseAuth = FirebaseAuth.getInstance();
@@ -59,46 +59,60 @@ public class ChangePasswordActivity extends AppCompatActivity {
             }
         };
 
-        // TODO: Validate newPassword possible
         changePasswordButton.setOnClickListener(view -> {
             AuthCredential credential = EmailAuthProvider.getCredential(ShopSaverApi.getInstance().getUserEmail(),
                     originalPasswordText.getText().toString());
 
-            currentUser.reauthenticate(credential)
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                currentUser.updatePassword(newPasswordText.getText().toString())
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful()) {
-                                                    Toast.makeText(ChangePasswordActivity.this,
-                                                            "Password Changed Successfully", Toast.LENGTH_SHORT).show();
-                                                    try {
-                                                        TimeUnit.SECONDS.sleep(2);
-                                                    } catch (InterruptedException e) {
-                                                        e.printStackTrace();
-                                                    }
-                                                    startActivity(new Intent(ChangePasswordActivity.this,
-                                                            HomepageActivity.class));
+            if (validatePassword(newPasswordText.getText().toString())) {
+                currentUser.reauthenticate(credential)
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    currentUser.updatePassword(newPasswordText.getText().toString())
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        Toast.makeText(ChangePasswordActivity.this,
+                                                                "Password Changed Successfully", Toast.LENGTH_SHORT).show();
+                                                        try {
+                                                            TimeUnit.SECONDS.sleep(2);
+                                                        } catch (InterruptedException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                        startActivity(new Intent(ChangePasswordActivity.this,
+                                                                HomepageActivity.class));
 
+                                                    }
+                                                    else {
+                                                        Toast.makeText(ChangePasswordActivity.this,
+                                                                "Error in Updating", Toast.LENGTH_SHORT).show();
+                                                    }
                                                 }
-                                                else {
-                                                    Toast.makeText(ChangePasswordActivity.this,
-                                                            "Error in Updating", Toast.LENGTH_SHORT).show();
-                                                }
-                                            }
-                                        });
-                            } else {
-                                Toast.makeText(ChangePasswordActivity.this,
-                                        "Authentication Failed", Toast.LENGTH_SHORT).show();
+                                            });
+                                } else {
+                                    Toast.makeText(ChangePasswordActivity.this,
+                                            "Authentication Failed", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    });
+                        });
+            } else {
+                Toast.makeText(this, "New Password is not at least 10 characters", Toast.LENGTH_SHORT).show();
+            }
+
 
         });
+    }
+
+    /**
+     * This function validates if the new password that the user entered is valid or not
+     * @param password the password that the user entered
+     * @return a boolean value to denote if the password is valid or not
+     */
+    private boolean validatePassword(String password) {
+        boolean passwordValid = !TextUtils.isEmpty(password) && password.length() >= 10;
+        return passwordValid;
     }
 
     // Before we show user stuff on the screen,

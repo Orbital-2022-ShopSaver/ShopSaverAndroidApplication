@@ -7,7 +7,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -50,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     // Initialise my widgets
     private Button loginButton;
     private Button createAcctButton;
+    private Button forgotPasswordButton;
 
     private AutoCompleteTextView emailAddress;
     private EditText password;
@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
         // Get my widgets
         loginButton = findViewById(R.id.email_sign_in_button);
         createAcctButton = findViewById(R.id.create_acct_button_login);
+        forgotPasswordButton = findViewById(R.id.forgot_password_button);
         emailAddress = findViewById(R.id.email);
         password = findViewById(R.id.password);
         progressBar = findViewById(R.id.login_progress);
@@ -87,6 +88,12 @@ public class LoginActivity extends AppCompatActivity {
         // Once clicked, users will be taken to the CreateAccount Page (Activity)
         createAcctButton.setOnClickListener(view -> {
             startActivity(new Intent(LoginActivity.this, CreateAccountActivity.class));
+        });
+
+        // Assign a clickListener to forgotPasswordButton
+        // Once clicked, users will be taken to to the ForgotPasswordActivity
+        forgotPasswordButton.setOnClickListener(view -> {
+            startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
         });
 
 
@@ -110,50 +117,55 @@ public class LoginActivity extends AppCompatActivity {
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            // Get the user and the ID
-                            FirebaseUser user = firebaseAuth.getCurrentUser();
-                            assert user != null;
-                            String currentUserId = user.getUid();
+                            if (task.isSuccessful()) {
+                                // Get the user and the ID
+                                FirebaseUser user = firebaseAuth.getCurrentUser();
+                                assert user != null;
+                                String currentUserId = user.getUid();
 
-                            // From the collectionReference (database relevant to users),
-                            // We try to find the currentUserId
-                            collectionReference
-                                    .whereEqualTo("userId", currentUserId)
-                                    .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                                        @Override
-                                        public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                            // If have error, don't proceed
-                                            if (error != null) {
-                                                return;
-                                            }
+                                // From the collectionReference (database relevant to users),
+                                // We try to find the currentUserId
+                                collectionReference
+                                        .whereEqualTo("userId", currentUserId)
+                                        .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                                            @Override
+                                            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                                                // If have error, don't proceed
+                                                if (error != null) {
+                                                    return;
+                                                }
 
-                                            assert value != null;
+                                                assert value != null;
 
-                                            // Check if the value is not empty
-                                            if (!value.isEmpty()) {
-                                                // Can set to invisible, since nothing on going behind the scenes now
-                                                progressBar.setVisibility(View.INVISIBLE);
+                                                // Check if the value is not empty
+                                                if (!value.isEmpty()) {
+                                                    // Can set to invisible, since nothing on going behind the scenes now
+                                                    progressBar.setVisibility(View.INVISIBLE);
 
-                                                // Loop through the values and get the data
-                                                // We set it with our global ShopSaverApi
-                                                // So that it knows the user, id and email
-                                                for (QueryDocumentSnapshot snapshot : value) {
-                                                    ShopSaverApi shopSaverApi = ShopSaverApi.getInstance();
-                                                    shopSaverApi.setUsername(snapshot.getString("username"));
-                                                    shopSaverApi.setUserId(snapshot.getString("userId"));
-                                                    shopSaverApi.setUserEmail(snapshot.getString("userEmail"));
+                                                    // Loop through the values and get the data
+                                                    // We set it with our global ShopSaverApi
+                                                    // So that it knows the user, id and email
+                                                    for (QueryDocumentSnapshot snapshot : value) {
+                                                        ShopSaverApi shopSaverApi = ShopSaverApi.getInstance();
+                                                        shopSaverApi.setUsername(snapshot.getString("username"));
+                                                        shopSaverApi.setUserId(snapshot.getString("userId"));
+                                                        shopSaverApi.setUserEmail(snapshot.getString("userEmail"));
 
-                                                    // After that, we go to the Homepage Page (Activity)
-                                                    startActivity(new Intent(LoginActivity.this,
-                                                            HomepageActivity.class));
+                                                        // After that, we go to the Homepage Page (Activity)
+                                                        startActivity(new Intent(LoginActivity.this,
+                                                                HomepageActivity.class));
 
-                                                    // Finish since we are not coming back to this activity
-                                                    finish();
+                                                        // Finish since we are not coming back to this activity
+                                                        finish();
+                                                    }
                                                 }
                                             }
-                                        }
-                                    });
+                                        });
+                            } else {
+                                Toast.makeText(LoginActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
+                            }
                         }
+
                     })
                     // Add a failure listener
                     .addOnFailureListener(new OnFailureListener() {
@@ -161,7 +173,6 @@ public class LoginActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             progressBar.setVisibility(View.INVISIBLE);
                             // Log that failed to login
-                            // TODO: Probably should tell the user
                             Toast.makeText(LoginActivity.this, "Invalid Account", Toast.LENGTH_SHORT).show();
                         }
                     });

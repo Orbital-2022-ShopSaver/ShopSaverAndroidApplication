@@ -62,5 +62,7 @@
     <string name="price_expectation_text">Price Expectation</string>
     <string name="update_text">Update</string>
     <string name="change_password_text">Change Password</string>
+    <string name="forgot_password_text">Forgot Password</string>
+    <string name="send_text">Send</string>
 
 </resources>

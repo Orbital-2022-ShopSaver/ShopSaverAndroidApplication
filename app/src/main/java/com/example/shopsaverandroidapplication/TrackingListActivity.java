@@ -6,15 +6,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -27,7 +26,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +35,6 @@ import ui.ProductRecyclerTrackingListAdapter;
 import util.ShopSaverApi;
 
 // This activity is responsible for showcasing the list of items the user is tracking
-// TODO: Not too sure about the UI for this yet
 // We can use a similar layout to our Displaying Results for now
 public class TrackingListActivity extends AppCompatActivity {
 
@@ -127,7 +124,6 @@ public class TrackingListActivity extends AppCompatActivity {
         String currentPlatform = product.getPlatform().toLowerCase();
         String currentUrl = product.getUrl();
         String urlToCall = apiEndpoint + currentPlatform + "/single/" + currentUrl;
-        Log.d("TEST", urlToCall);
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
                 urlToCall, null, response -> {
                 try {
@@ -139,10 +135,8 @@ public class TrackingListActivity extends AppCompatActivity {
                     DocumentReference productDocumentReference = db.collection("Products")
                             .document(product.getDocumentId());
                     productDocumentReference.update("price", currentPrice);
-                    Log.d("PRICE", String.valueOf(currentPrice));
 
                     if (numOfRequests == 0) {
-                        Log.d("DATA CHANGED", "HERE");
                         productRecyclerTrackingListAdapter.notifyDataSetChanged();
 
                     }
@@ -151,7 +145,7 @@ public class TrackingListActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-        }, error -> Log.d("JSON", "Error creating Object"));
+        }, error -> Toast.makeText(this, "Error Getting Product", Toast.LENGTH_SHORT).show());
 
         queue.add(jsonArrayRequest);
         
@@ -201,7 +195,7 @@ public class TrackingListActivity extends AppCompatActivity {
                 }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d("Failure", "Failed to Load");
+                        Toast.makeText(TrackingListActivity.this, "Failed to Load", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

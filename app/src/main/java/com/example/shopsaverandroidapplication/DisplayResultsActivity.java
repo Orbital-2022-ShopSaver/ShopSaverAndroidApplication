@@ -5,7 +5,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import java.util.List;
 
@@ -47,7 +46,6 @@ public class DisplayResultsActivity extends AppCompatActivity {
         // Get my productList from ShopSaverApi
         ShopSaverApi shopSaverApi = ShopSaverApi.getInstance();
         productList = shopSaverApi.getProductArrayList();
-        Log.d("Product", productList.toString());
 
         // After that, invoke my recycler to get my items
         productRecyclerAdapter = new ProductRecyclerAdapter(DisplayResultsActivity.this,

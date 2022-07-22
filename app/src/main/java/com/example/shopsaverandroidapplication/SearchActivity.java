@@ -4,12 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -122,7 +122,7 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(new Intent(SearchActivity.this,
                         DisplayResultsActivity.class));
             }
-        }, error -> Log.d("JSON", "Error creating Object"));
+        }, error -> Toast.makeText(this, "Error Creating Products", Toast.LENGTH_SHORT).show());
 
         queue.add(jsonArrayRequest);
 

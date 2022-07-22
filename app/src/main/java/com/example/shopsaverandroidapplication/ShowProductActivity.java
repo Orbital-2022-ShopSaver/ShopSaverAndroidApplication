@@ -186,7 +186,7 @@ public class ShowProductActivity extends AppCompatActivity {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 addProductProgressBar.setVisibility(View.INVISIBLE);
-                                Log.d("Failure", "Failed to add item");
+                                Toast.makeText(ShowProductActivity.this, "Failed to add Item", Toast.LENGTH_SHORT).show();
                             }
                         });
             }

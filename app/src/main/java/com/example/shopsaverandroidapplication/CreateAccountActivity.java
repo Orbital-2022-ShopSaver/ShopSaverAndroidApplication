@@ -6,7 +6,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -204,7 +203,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                                             public void onFailure(@NonNull Exception e) {
                                                                 // If failed, log a warning
                                                                 // Failed to go to homepage
-                                                                Log.d("Failure", "Failed to go to HomepageActivity");
+                                                                Toast.makeText(CreateAccountActivity.this, "Authentication Failed", Toast.LENGTH_SHORT).show();
                                                             }
                                                         });
                                             }
@@ -213,7 +212,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                                             public void onFailure(@NonNull Exception e) {
                                                 // If failed, log a warning
                                                 // Failed to save value to DB
-                                                Log.d("Failure", "Failed to save to DB");
+                                                Toast.makeText(CreateAccountActivity.this, "Failed to create Account", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             }
@@ -223,7 +222,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         public void onFailure(@NonNull Exception e) {
                             // If failed, log a warning
                             // Failed to create the user
-                            Log.d("Failure", "Failed to create user");
+                            Toast.makeText(CreateAccountActivity.this, "Failed to create Account", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
