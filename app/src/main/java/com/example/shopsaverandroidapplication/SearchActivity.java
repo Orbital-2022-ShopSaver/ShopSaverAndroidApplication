@@ -122,7 +122,12 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(new Intent(SearchActivity.this,
                         DisplayResultsActivity.class));
             }
-        }, error -> Toast.makeText(this, "Error Creating Products", Toast.LENGTH_SHORT).show());
+        }, error -> {
+            Toast.makeText(this, "Error Creating Products, Please Try Again", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.INVISIBLE);
+        }
+
+        );
 
         queue.add(jsonArrayRequest);
 
