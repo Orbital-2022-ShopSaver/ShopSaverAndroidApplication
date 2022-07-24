@@ -125,6 +125,7 @@ public class SearchActivity extends AppCompatActivity {
         }, error -> {
             Toast.makeText(this, "Error Creating Products, Please Try Again", Toast.LENGTH_SHORT).show();
             progressBar.setVisibility(View.INVISIBLE);
+            startActivity(new Intent(SearchActivity.this, HomepageActivity.class));
         }
 
         );
