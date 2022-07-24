@@ -42,6 +42,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         // Assign Firebase stuff
         firebaseAuth = FirebaseAuth.getInstance();
 
+        // Assigned onClickListener to sendButton
         sendButton.setOnClickListener(view -> {
             String email = emailText.getText().toString();
 
