@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.concurrent.TimeUnit;
 
+// This class is responsible for helping the user in the case of a forgotten password
 public class ForgotPasswordActivity extends AppCompatActivity {
 
     // Initialise my Widgets
