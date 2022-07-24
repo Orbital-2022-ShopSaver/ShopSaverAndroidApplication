@@ -15,7 +15,6 @@ import com.google.firebase.auth.FirebaseUser;
 // This Activity is responsible for the main page of the class
 // When clicked on ItemListActivity, user will be taken to see a list of items being tracked
 // When clicked on SearchActivity, user will be taken to search a list of items
-
 public class HomepageActivity extends AppCompatActivity {
 
     // Firebase Stuff
