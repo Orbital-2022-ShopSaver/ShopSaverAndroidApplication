@@ -122,6 +122,9 @@ public class TrackingListActivity extends AppCompatActivity {
      */
     private void getCurrentPrice(Product product) {
         String currentPlatform = product.getPlatform().toLowerCase();
+        if (currentPlatform.equals("qoo10")) {
+            currentPlatform = "qooten";
+        }
         String currentUrl = product.getUrl();
         String urlToCall = apiEndpoint + currentPlatform + "/single/" + currentUrl;
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET,
