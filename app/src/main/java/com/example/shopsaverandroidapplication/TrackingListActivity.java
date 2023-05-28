@@ -67,7 +67,7 @@ public class TrackingListActivity extends AppCompatActivity {
     RequestQueue queue;
 
     // apiEndpoint to make the GET Calls to
-    private String apiEndpoint = "https://testwebapiformyself.herokuapp.com/";
+    private String apiEndpoint = "http://0.0.0.0:5000/";
 
     /**
      * This method will run upon creation of the Activity

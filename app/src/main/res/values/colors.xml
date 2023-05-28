@@ -15,4 +15,6 @@
     <color name="startGColor">#ADD8E6</color>
     <color name="midGColor">#FF03DAC5</color>
     <color name="endGColor">#FF018786</color>
+    <color name="yellow">#FAFAD2</color>
+    <color name="peachy">#FFDAB9</color>
 </resources>

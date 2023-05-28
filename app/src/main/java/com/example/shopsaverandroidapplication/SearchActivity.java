@@ -44,7 +44,7 @@ public class SearchActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     // apiEndpoint to make the GET Calls to
-    private String apiEndpoint = "https://testwebapiformyself.herokuapp.com/";
+    private String apiEndpoint = "http://0.0.0.0:5000/";
 
     // Initialise a queue, which will be used by Volley
     RequestQueue queue;
